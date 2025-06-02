@@ -1,0 +1,55 @@
+sudo ip tunnel add he-ipv6 mode sit remote SERVER_IPV4 local CLIENT_IPV4 ttl 255
+sudo ip link set he-ipv6 up
+sudo ip addr add CLIENT_IPV6 dev he-ipv6
+sudo ip route add ::/0 dev he-ipv6
+sudo ip -6 addr add (SUBNET) dev ens3
+
+ip -6 route add local (SUBNET) dev lo
+
+sudo ip tunnel add he-ipv6 mode sit remote 209.51.161.14 local 168.235.82.238 ttl 255
+sudo ip link set he-ipv6 up
+sudo ip addr add 2001:470:1f06:6aa::2/64 dev he-ipv6
+sudo ip route add ::/0 dev he-ipv6
+sudo ip -6 addr add 2001:470:8a8d::1/48 dev ens3
+
+sudo ip -6 addr add 2001:470:e1a6::100/48 dev ens3
+sudo ip -6 addr add 2001:470:e1a6::abc/48 dev ens3
+
+curl --interface 2001:470:e1a6::100 https://api64.ipify.org?format=json
+curl --interface 2001:470:e1a6::abc https://api64.ipify.org?format=json
+
+ip -6 addr show dev ens3
+
+sudo ip -6 addr del 2001:470:e1a6::100/48 dev ens3
+sudo ip -6 addr del 2001:470:e1a6::abc/48 dev ens3
+
+---
+
+
+sudo ip -6 route del default via fe80::1 dev ens3
+
+---
+
+ulimit -n
+
+
+network:
+  version: 2
+  renderer: networkd
+  tunnels:
+    he-ipv6:
+      mode: sit
+      remote: 216.66.22.2
+      local: 107.161.20.30
+      addresses:
+        - 2001:470:7:270::2/64
+      routes:
+        - to: ::/0
+          via: ::
+  ethernets:
+    ens3:
+      dhcp4: yes
+      dhcp6: no
+      accept-ra: no
+      addresses:
+        - 2001:470:e1a6::1/48

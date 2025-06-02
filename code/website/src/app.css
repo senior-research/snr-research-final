@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: #0A0A0C;
+  color: #F3F4F6;
+}
+
+.card-gradient {
+  background: linear-gradient(135deg, #111827 0%, #1F2937 100%);
+}
+
+.accent-gradient {
+  background: linear-gradient(90deg, #34D399 0%, #06B6D4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
