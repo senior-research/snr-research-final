@@ -1,5 +1,4 @@
-# snr-research-final
-
+# WeTrade: Integrated NLP, HFT, Technical Analysis Trading Bot
 Gus Simanson, Max Weinstein, Drew Zauel
 
 ---
